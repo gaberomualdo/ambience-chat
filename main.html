@@ -16,7 +16,7 @@
     </div>
     <div class="container">
         <div class="chat"></div>
-        <input type="text" placeholder="Type a message..." id="messagebox">
+        <input type="text" placeholder="Type a message..." id="messagebox" autofocus="true">
     </div>
 
     <script src="assets/jquery.min.js"></script>
@@ -58,6 +58,7 @@
             $("div.chat").append("<div class='message " + side + "'><p>" + message.text.replace(/>/g, '&gt;').replace(/</g, '&lt;') + "</p></div><strong class='" + side + "'><span>" + message.sender.split("_")[0] + "</span> at " + message.time + "</strong>");
           });
         }
+        $('div.chat').scrollTop($('div.chat')[0].scrollHeight);
       });
     }else{
       $("div.container").html("<input class='join' placeholder='Join chatroom...' type='text' onkeydown='if(event.keyCode == 13){ window.open(\"main.html?c=\" + this.value + \"\",\"_self\") }'>");
