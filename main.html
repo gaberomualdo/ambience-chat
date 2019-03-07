@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ambience Chat</title>
+    
+    <link rel="shortcut icon" href="assets/icon.png">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/chat.css">
+</head>
+<body>
+    <div class="loader">
+        
+    </div>
+    <div class="container">
+        <div class="chat"></div>
+        <input type="text" placeholder="Type a message..." id="messagebox">
+    </div>
+
+    <script src="assets/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+    
+    <script>var currentHTMLPage = "main.html";</script>
+
+    <script src="assets/firebase.js"></script>
+    <script>
+    
+    function getQueryVariable(variable)
+    {
+           var query = window.location.search.substring(1);
+           var vars = query.split("&");
+           for (var i=0;i<vars.length;i++) {
+                   var pair = vars[i].split("=");
+                   if(pair[0] == variable){return pair[1];}
+           }
+           return(false);
+    }
+
+    if(getQueryVariable("c")){
+      $("#messagebox").on("keydown", function(e){
+          if(e.keyCode == 13){
+              var d = new Date();
+              firebase.database().ref(getQueryVariable("c")).push({text: $("#messagebox").val(), sender: firebase.auth().currentUser.email, time: d.getHours() + ":" + d.getMinutes()});
+              $("#messagebox").val("");
+          }
+      });
+      firebase.database().ref(getQueryVariable("c")).on("value", function(e){
+        var chat = e.val();
+        if(chat){
+          $("div.chat").html("");
+          Object.values(chat).forEach(function(message){
+            var side = "right";
+            if(message.sender != firebase.auth().currentUser.email){
+              side = "left";
+            }
+            $("div.chat").append("<div class='message " + side + "'><p>" + message.text.replace(/>/g, '&gt;').replace(/</g, '&lt;') + "</p></div><strong class='" + side + "'><span>" + message.sender.split("_")[0] + "</span> at " + message.time + "</strong>");
+          });
+        }
+      });
+    }else{
+      $("div.container").html("<input class='join' placeholder='Join chatroom...' type='text' onkeydown='if(event.keyCode == 13){ window.open(\"main.html?c=\" + this.value + \"\",\"_self\") }'>");
+    }
+
+    </script>
+</body>
+</html>

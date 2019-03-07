@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i');
+
+* {
+	padding: 0;
+	margin: 0;
+	font-family: "Source Sans Pro", system, -apple-system, system-ui, BlinkMacSystemFont, "Helvetica Neue", "Helvetica", "Lucida Grande", sans-serif;
+}
+:root {
+	--main: #2188ff;
+	--dark: #2155ff;
+
+	--light1: #eee;
+	--light2: #dedede;
+	--light3: #bbb;
+	
+	--errorbg: #ffdce0;
+	--errorcolor: #86181d;
+}
+::selection {
+	color: white;
+	background-color: var(--main);
+}
+
+body{
+	background-color: var(--light1);
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent; 
+}
+ 
+::-webkit-scrollbar-thumb {
+	background: var(--light3); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #888; 
+}
