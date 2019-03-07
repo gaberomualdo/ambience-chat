@@ -60,11 +60,11 @@
               side = "left";
             }
             var nextside = "right";
-            if(Object.values(chat)[messageindex + 1] && Object.values(chat)[messageindex + 1].sender != firebase.auth().currentUser.email) {
-              nextside = "left";
-            }
             var active = "";
-            if(Object.values(chat).length - 1 == messageindex || nextside != side) {
+            if(Object.values(chat)[messageindex + 1] && message.sender != Object.values(chat)[messageindex + 1].sender) {
+              active = "display";
+            }
+            if(Object.values(chat).length - 1 == messageindex) {
               active = "display";
             }
             $("div.chat").append("<div class='message " + side + "'><p>" + message.text.replace(/>/g, '&gt;').replace(/</g, '&lt;') + "</p></div><strong class='" + active + " " + side + "'><span>" + message.sender.split("_")[0] + "</span> at " + message.time + "</strong>");

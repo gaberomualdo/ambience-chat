@@ -29,6 +29,7 @@ div.container div.chat div.message {
 	clear: both;
 	padding: 0.5rem;
 	margin-bottom: 0.5rem;
+	max-width: 65%;
 }
 div.container div.chat div.message.right {
 	color: #fff;
