@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ambience Chat</title>
     
-    <link rel="shortcut icon" href="assets/icon.png">
+    <link rel="shortcut icon" href="assets/icon.png" id="favicon">
     <link rel="stylesheet" href="assets/main.css">
     <link rel="stylesheet" href="assets/chat.css">
 </head>
@@ -27,6 +27,14 @@
     <script src="assets/firebase.js"></script>
     <script>
     
+    var vis = function(){
+      if(document.hidden){
+        return false;
+      }else{
+        return true;
+      }
+    }
+
     function getQueryVariable(variable)
     {
            var query = window.location.search.substring(1);
@@ -68,6 +76,12 @@
               active = "display";
             }
             $("div.chat").append("<div class='message " + side + "'><p>" + message.text.replace(/>/g, '&gt;').replace(/</g, '&lt;') + "</p></div><strong class='" + active + " " + side + "'><span>" + message.sender.split("_")[0] + "</span> at " + message.time + "</strong>");
+            if(!vis()) {
+              document.title = "(!) Ambience Chat";
+              $("#favicon").attr("href","assets/notif.png");
+              var audio = new Audio('assets/notif.mp3');
+              audio.play();
+            }
           });
         }
         $('div.chat').scrollTop($('div.chat')[0].scrollHeight);
@@ -75,7 +89,12 @@
     }else{
       $("div.container").html("<input class='join' placeholder='Join chatroom...' type='text' onkeydown='if(event.keyCode == 13){ window.open(\"main.html?c=\" + this.value + \"\",\"_self\") }'>");
     }
-
+    setInterval(function(){
+      if(vis()){
+        document.title = "Ambience Chat";
+        $("#favicon").attr("href","assets/icon.png");
+      }
+    },200);
     </script>
 </body>
 </html>
