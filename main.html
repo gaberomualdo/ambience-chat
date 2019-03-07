@@ -52,15 +52,15 @@
       });
       firebase.database().ref(getQueryVariable("c")).on("value", function(e){
         var chat = e.val();
+        $("div.chat").html("");
         if(chat){
-          $("div.chat").html("");
           Object.values(chat).forEach(function(message, messageindex){
             var side = "right";
             if(message.sender != firebase.auth().currentUser.email){
               side = "left";
             }
             var nextside = "right";
-            if(Object.values(chat)[messageindex + 1].sender != firebase.auth().currentUser.email) {
+            if(Object.values(chat)[messageindex + 1] && Object.values(chat)[messageindex + 1].sender != firebase.auth().currentUser.email) {
               nextside = "left";
             }
             var active = "";
