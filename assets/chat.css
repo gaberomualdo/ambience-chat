@@ -12,6 +12,7 @@ div.container {
 	padding: 1.5rem;
 	box-sizing: border-box;
 	text-align: left;
+	overflow-y: hidden;
 }
 div.container div.chat {
 	height: calc(100vh - 6rem);
@@ -46,6 +47,9 @@ div.container div.chat > strong {
 	font-size: 0.825rem;
 	margin-bottom: 0.75rem;
 	margin-top: 0.25rem;
+}
+div.container div.chat > strong:not(.display) {
+	display: none;
 }
 div.container div.chat > strong.left {
 	float: left;

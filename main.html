@@ -50,12 +50,20 @@
         var chat = e.val();
         if(chat){
           $("div.chat").html("");
-          Object.values(chat).forEach(function(message){
+          Object.values(chat).forEach(function(message, messageindex){
             var side = "right";
             if(message.sender != firebase.auth().currentUser.email){
               side = "left";
             }
-            $("div.chat").append("<div class='message " + side + "'><p>" + message.text.replace(/>/g, '&gt;').replace(/</g, '&lt;') + "</p></div><strong class='" + side + "'><span>" + message.sender.split("_")[0] + "</span> at " + message.time + "</strong>");
+            var nextside = "right";
+            if(Object.values(chat)[messageindex + 1].sender != firebase.auth().currentUser.email) {
+              nextside = "left";
+            }
+            var active = "";
+            if(nextside != side) {
+              active = "display";
+            }
+            $("div.chat").append("<div class='message " + side + "'><p>" + message.text.replace(/>/g, '&gt;').replace(/</g, '&lt;') + "</p></div><strong class='" + active + " " + side + "'><span>" + message.sender.split("_")[0] + "</span> at " + message.time + "</strong>");
           });
         }
         $('div.chat').scrollTop($('div.chat')[0].scrollHeight);
