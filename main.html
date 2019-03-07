@@ -40,10 +40,14 @@
 
     if(getQueryVariable("c")){
       $("#messagebox").on("keydown", function(e){
-          if(e.keyCode == 13){
+          if(e.keyCode == 13 && $("#messagebox").val() != "/clear"){
               var d = new Date();
-              firebase.database().ref(getQueryVariable("c")).push({text: $("#messagebox").val(), sender: firebase.auth().currentUser.email, time: d.getHours() + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes()});
+              firebase.database().ref(getQueryVariable("c")).push({text: $("#messagebox").val(), sender: firebase.auth().currentUser.email, time: d.getHours() + ":" + (d.getMinutes()<10?'0':'') + d.getMinutes()});
               $("#messagebox").val("");
+          }
+          if($("#messagebox").val() == "/clear") {
+            firebase.database().ref(getQueryVariable("c")).set(null);
+            $("#messagebox").val("");
           }
       });
       firebase.database().ref(getQueryVariable("c")).on("value", function(e){
@@ -56,7 +60,7 @@
               side = "left";
             }
             var nextside = "right";
-            if(Object.values(chat)[messageindex + 1].sender != firebase.auth().currentUser.email) {
+            if(Object.values(chat).length - 1 == messageindex ||  Object.values(chat)[messageindex + 1].sender != firebase.auth().currentUser.email) {
               nextside = "left";
             }
             var active = "";

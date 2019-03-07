@@ -28,6 +28,7 @@ div.container div.chat div.message {
 	border: 1px solid var(--light2);
 	clear: both;
 	padding: 0.5rem;
+	margin-bottom: 0.5rem;
 }
 div.container div.chat div.message.right {
 	color: #fff;
@@ -46,7 +47,6 @@ div.container div.chat > strong {
 	color: #999;
 	font-size: 0.825rem;
 	margin-bottom: 0.75rem;
-	margin-top: 0.25rem;
 }
 div.container div.chat > strong:not(.display) {
 	display: none;
